@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LegalAssist AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;800&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/home.css" />
+</head>
+<body>
+  <main class="home-shell">
+    <header class="home-nav">
+      <a class="brand" href="/">LegalAssist AI</a>
+      <nav class="nav-actions">
+        <a class="link-btn" href="/login">Login</a>
+        <a class="solid-btn" href="/register">Register</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <p class="eyebrow">LEGAL HELP MADE SIMPLE</p>
+      <h1>Understand Legal Issues Faster and More Clearly.</h1>
+      <p class="subtitle">
+        Ask legal questions in plain English, upload your documents, and get easy-to-read explanations in seconds.
+      </p>
+      <div class="hero-actions">
+        <a class="solid-btn" href="/register">Create Account</a>
+        <a class="link-btn" href="/login">I already have an account</a>
+      </div>
+    </section>
+
+    <section class="feature-grid">
+      <article class="feature-card">
+        <h2>Plain-Language Answers</h2>
+        <p>Complex legal topics translated into simple, practical guidance.</p>
+      </article>
+      <article class="feature-card">
+        <h2>Chat + Documents</h2>
+        <p>Upload files and ask follow-up questions in one chat flow.</p>
+      </article>
+      <article class="feature-card">
+        <h2>Saved Chat History</h2>
+        <p>Sign in to keep and revisit previous legal conversations.</p>
+      </article>
+    </section>
+  </main>
+
+  <script>
+    window.APP_CONFIG = <%- JSON.stringify(config) %>;
+  </script>
+  <script src="/js/auth.js"></script>
+</body>
+</html>

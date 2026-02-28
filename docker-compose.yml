@@ -1,0 +1,61 @@
+version: "3.9"
+
+services:
+  frontend:
+    image: node:20-alpine
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+    command: sh -c "npm install && npm start"
+    ports:
+      - "3000:3000"
+    environment:
+      - FRONTEND_PORT=3000
+      - BACKEND_API_BASE=http://localhost:5000
+      - RAG_API_BASE=http://localhost:8000
+    env_file:
+      - .env
+    depends_on:
+      - backend-node
+      - ml-fastapi
+
+  backend-node:
+    image: node:20-alpine
+    working_dir: /app
+    volumes:
+      - ./backend-node:/app
+    command: sh -c "npm install && npm start"
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - MONGO_URI=mongodb://mongo:27017/legal_rag
+      - BACKEND_FASTAPI_URL=http://ml-fastapi:8000
+      - CORS_ORIGIN=http://localhost:3000
+    env_file:
+      - .env
+    depends_on:
+      - mongo
+      - ml-fastapi
+
+  ml-fastapi:
+    image: python:3.11-slim
+    working_dir: /app
+    volumes:
+      - ./ml-fastapi:/app
+    command: sh -c "pip install -r requirements.txt && uvicorn main:app --host 0.0.0.0 --port 8000"
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:

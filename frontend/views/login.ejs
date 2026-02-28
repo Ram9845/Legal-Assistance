@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login | LegalAssist AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/auth.css" />
+</head>
+<body>
+  <main class="auth-shell">
+    <section class="auth-card">
+      <a class="back-link" href="/">Back to home</a>
+      <h1>Welcome Back</h1>
+      <p>Login to continue your legal assistant chats.</p>
+
+      <form id="loginForm" class="auth-form">
+        <label for="email">Email</label>
+        <input id="email" type="email" required />
+
+        <label for="password">Password</label>
+        <input id="password" type="password" required />
+
+        <button id="loginSubmit" type="submit">Login</button>
+      </form>
+      <div class="oauth-wrap">
+        <div id="googleAuthWrap" class="google-wrap"></div>
+        <a id="githubLoginLink" class="oauth-btn github" href="#">Continue with GitHub</a>
+      </div>
+      <p id="authStatus" class="auth-status"></p>
+      <p class="auth-foot">
+        New user? <a href="/register">Create an account</a>
+      </p>
+    </section>
+  </main>
+
+  <script>
+    window.APP_CONFIG = <%- JSON.stringify(config) %>;
+  </script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="/js/auth.js"></script>
+</body>
+</html>
