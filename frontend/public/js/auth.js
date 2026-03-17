@@ -150,6 +150,46 @@ function initHomePage() {
       nav.innerHTML = '<a class="solid-btn" href="/chat">Go to Chat</a>';
     })
     .catch(() => {});
+
+  const quickAskForm = document.getElementById("quickAskForm");
+  const quickQuestionInput = document.getElementById("quickQuestionInput");
+  const quickAskStatus = document.getElementById("quickAskStatus");
+  const quickAskAnswer = document.getElementById("quickAskAnswer");
+
+  if (quickAskForm && quickQuestionInput && quickAskStatus && quickAskAnswer) {
+    quickAskForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const question = quickQuestionInput.value.trim();
+      if (!question) {
+        quickAskStatus.textContent = "Please type a question first.";
+        quickAskAnswer.classList.add("hidden");
+        return;
+      }
+
+      quickAskStatus.textContent = "Getting answer...";
+      quickAskAnswer.classList.add("hidden");
+
+      try {
+        const res = await fetch(`${window.APP_CONFIG.backendApiBase}/api/chat/query`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ query: question, attachments: [] }),
+        });
+
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          throw new Error(data.message || `Request failed (${res.status})`);
+        }
+
+        quickAskStatus.textContent = "Answer ready.";
+        quickAskAnswer.textContent = data.answer || "No answer returned.";
+        quickAskAnswer.classList.remove("hidden");
+      } catch (err) {
+        quickAskStatus.textContent = err.message || "Failed to fetch answer.";
+        quickAskAnswer.classList.add("hidden");
+      }
+    });
+  }
 }
 
 function initLoginPage() {

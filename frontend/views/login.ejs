@@ -18,18 +18,23 @@
 
       <form id="loginForm" class="auth-form">
         <label for="email">Email</label>
-        <input id="email" type="email" required />
+        <input id="email" type="email" placeholder="you@example.com" required autocomplete="email" />
 
         <label for="password">Password</label>
-        <input id="password" type="password" required />
+        <input id="password" type="password" placeholder="Your password" required autocomplete="current-password" />
 
-        <button id="loginSubmit" type="submit">Login</button>
+        <button id="loginSubmit" type="submit">Login →</button>
       </form>
+
+      <div class="divider">or continue with</div>
+
       <div class="oauth-wrap">
         <div id="googleAuthWrap" class="google-wrap"></div>
         <a id="githubLoginLink" class="oauth-btn github" href="#">Continue with GitHub</a>
       </div>
+
       <p id="authStatus" class="auth-status"></p>
+
       <p class="auth-foot">
         New user? <a href="/register">Create an account</a>
       </p>

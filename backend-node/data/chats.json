@@ -1,0 +1,235 @@
+[
+  {
+    "id": "263cd5ac-b5b2-43b9-9063-e5e0bbd4a3ee",
+    "userId": "504dc25b-e8ba-456f-a382-84b7652d895d",
+    "title": "Explain in simple language: Please review uploaded files...",
+    "messages": [
+      {
+        "role": "user",
+        "text": "Explain in simple language: Please review uploaded files.\n\nContext: user attached 1 file(s)/image(s).",
+        "attachments": [
+          {
+            "name": "legal_problem_ai_test.pdf",
+            "type": "application/pdf",
+            "sizeLabel": "4KB",
+            "kind": "file"
+          }
+        ],
+        "createdAt": "2026-03-09T13:09:33.900Z"
+      },
+      {
+        "role": "assistant",
+        "text": "RAG placeholder response for: Explain in simple language for a non-lawyer:\nExplain in simple language: Please review uploaded files.\n\nContext: user attached 1 file(s)/image(s).\n\nUser attached 1 file(s)/image(s).",
+        "attachments": [],
+        "createdAt": "2026-03-09T13:09:33.900Z"
+      },
+      {
+        "role": "user",
+        "text": "Explain in simple language: what happens if a person hits with a vehicle and run away",
+        "attachments": [],
+        "createdAt": "2026-03-09T13:20:55.998Z"
+      },
+      {
+        "role": "assistant",
+        "text": "RAG placeholder response for: Explain in simple language for a non-lawyer:\nExplain in simple language: what happens if a person hits with a vehicle and run away",
+        "attachments": [],
+        "createdAt": "2026-03-09T13:20:55.998Z"
+      },
+      {
+        "role": "user",
+        "text": "Explain in simple language: hit and run case explain",
+        "attachments": [],
+        "createdAt": "2026-03-09T13:24:48.848Z"
+      },
+      {
+        "role": "assistant",
+        "text": "If a person hits someone with a vehicle and then runs away, that is usually treated as a serious offense (commonly called hit-and-run). If there is injury or death, penalties are usually much higher and can include jail/prison, fines, license suspension, and civil damages.\n\nWhat to do immediately:\n1. Call emergency services (911) and get medical help.\n2. Report the incident to police and request a copy/report number.\n3. Collect evidence: photos, location, time, witnesses, and any vehicle details.\n4. Inform your insurer quickly and keep medical/bill records.\n5. Speak with a local personal-injury/criminal lawyer for state-specific deadlines and rights.\n\nLegal note: exact charges and punishment depend on local/state law and facts (injury level, intent, DUI, prior record).",
+        "attachments": [],
+        "createdAt": "2026-03-09T13:24:48.848Z"
+      },
+      {
+        "role": "user",
+        "text": "Explain in simple language: Please review uploaded files.\n\nContext: user attached 1 file(s)/image(s).",
+        "attachments": [
+          {
+            "name": "legal_problem_ai_test.pdf",
+            "type": "application/pdf",
+            "sizeLabel": "4KB",
+            "kind": "file"
+          }
+        ],
+        "createdAt": "2026-03-09T13:26:15.022Z"
+      },
+      {
+        "role": "assistant",
+        "text": "Simple explanation:\nPlease review uploaded files.\n\nContext: user attached 1 file(s)/image(s).\n\nUser attached 1 file(s)/image(s).\n\nGeneral legal guidance:\n1. Identify the exact law in your state/country because rules vary by location.\n2. Save documents, screenshots, timelines, and names of people involved.\n3. Check deadlines (notice periods, filing limits, response dates).\n4. If risk is high (court, arrest, major money loss), consult a licensed lawyer quickly.\n\nThis is general legal information, not legal advice.",
+        "attachments": [],
+        "createdAt": "2026-03-09T13:26:15.022Z"
+      },
+      {
+        "role": "user",
+        "text": "Explain in simple language: is this AI trained on 50000 Supreme court data or else nothing",
+        "attachments": [],
+        "createdAt": "2026-03-09T13:27:07.623Z"
+      },
+      {
+        "role": "assistant",
+        "text": "Simple explanation:\nis this AI trained on 50000 Supreme court data or else nothing\n\nGeneral legal guidance:\n1. Identify the exact law in your state/country because rules vary by location.\n2. Save documents, screenshots, timelines, and names of people involved.\n3. Check deadlines (notice periods, filing limits, response dates).\n4. If risk is high (court, arrest, major money loss), consult a licensed lawyer quickly.\n\nThis is general legal information, not legal advice.",
+        "attachments": [],
+        "createdAt": "2026-03-09T13:27:07.623Z"
+      },
+      {
+        "role": "user",
+        "text": "Explain in simple language: what happens if a person hits with a vehicle and run away",
+        "attachments": [],
+        "createdAt": "2026-03-09T13:45:04.605Z"
+      },
+      {
+        "role": "assistant",
+        "text": "India legal explanation (general information):\nQuestion: what happens if a person hits with a vehicle and run away\n\nRelevant points:\n- When a road accident occurs, the driver is expected to stop, assist the injured person in obtaining medical care, share identifying information, and report the incident to the police as required by law.\n- If a person drives rashly or negligently and causes injury or death, criminal prosecution can follow.\n\nSources used:\n- Motor Vehicles Act: Duties of driver after accident (1988) | Motor Vehicles Act, 1988 (India)\n- Rash and negligent driving consequences (Current) | Indian criminal law principles on rash/negligent driving and causing hurt/death\n\nImportant: This is general legal information, not a substitute for advice from a licensed advocate.",
+        "attachments": [],
+        "createdAt": "2026-03-09T13:45:04.606Z"
+      },
+      {
+        "role": "user",
+        "text": "Explain in simple language: give solution for this\n\nContext: user attached 1 file(s)/image(s).",
+        "attachments": [
+          {
+            "name": "legal_problem_ai_test.pdf",
+            "type": "application/pdf",
+            "sizeLabel": "4KB",
+            "kind": "file"
+          }
+        ],
+        "createdAt": "2026-03-09T17:14:25.053Z"
+      },
+      {
+        "role": "assistant",
+        "text": "Simple explanation (India context):\ngive solution for this\n\nContext: user attached 1 file(s)/image(s).\n\nUser attached 1 file(s)/image(s).\n\nI could not find a strong match in the local India legal corpus for this query.\nTry adding details like: state, offense type, contract/employment/property context, and timeline.\n\nThis is general legal information, not legal advice.",
+        "attachments": [],
+        "createdAt": "2026-03-09T17:14:25.053Z"
+      },
+      {
+        "role": "user",
+        "text": "Explain in simple language: whats charges for murder",
+        "attachments": [],
+        "createdAt": "2026-03-09T17:14:54.432Z"
+      },
+      {
+        "role": "assistant",
+        "text": "Simple explanation (India context):\nwhats charges for murder\n\nI could not find a strong match in the local India legal corpus for this query.\nTry adding details like: state, offense type, contract/employment/property context, and timeline.\n\nThis is general legal information, not legal advice.",
+        "attachments": [],
+        "createdAt": "2026-03-09T17:14:54.432Z"
+      },
+      {
+        "role": "user",
+        "text": "Explain in simple language: whats the number of years of jail for a murderer",
+        "attachments": [],
+        "createdAt": "2026-03-09T17:15:29.872Z"
+      },
+      {
+        "role": "assistant",
+        "text": "Simple explanation (India context):\nwhats the number of years of jail for a murderer\n\nI could not find a strong match in the local India legal corpus for this query.\nTry adding details like: state, offense type, contract/employment/property context, and timeline.\n\nThis is general legal information, not legal advice.",
+        "attachments": [],
+        "createdAt": "2026-03-09T17:15:29.872Z"
+      },
+      {
+        "role": "user",
+        "text": "Explain in simple language: ediot",
+        "attachments": [],
+        "createdAt": "2026-03-09T17:15:38.613Z"
+      },
+      {
+        "role": "assistant",
+        "text": "Simple explanation (India context):\nediot\n\nI could not find a strong match in the local India legal corpus for this query.\nTry adding details like: state, offense type, contract/employment/property context, and timeline.\n\nThis is general legal information, not legal advice.",
+        "attachments": [],
+        "createdAt": "2026-03-09T17:15:38.613Z"
+      }
+    ],
+    "createdAt": "2026-03-09T13:09:33.891Z",
+    "updatedAt": "2026-03-09T17:15:38.613Z"
+  },
+  {
+    "id": "d45ceb6c-168f-43ed-817a-e0b6efe9e831",
+    "userId": "947b5e9d-ed3c-4948-a72b-6885f6d3d953",
+    "title": "hlo",
+    "messages": [
+      {
+        "role": "user",
+        "text": "hlo",
+        "attachments": [],
+        "createdAt": "2026-03-17T06:15:09.177Z"
+      },
+      {
+        "role": "assistant",
+        "text": "Simple explanation (India context):\nhlo\n\nI could not find a strong match in the local India legal corpus for this query.\nTry adding details like: state, offense type, contract/employment/property context, and timeline.\n\nThis is general legal information, not legal advice.",
+        "attachments": [],
+        "createdAt": "2026-03-17T06:15:09.177Z"
+      },
+      {
+        "role": "user",
+        "text": "whats the punishment for hit and run case",
+        "attachments": [],
+        "createdAt": "2026-03-17T06:16:20.379Z"
+      },
+      {
+        "role": "assistant",
+        "text": "India legal explanation (general information):\nQuestion: whats the punishment for hit and run case\n\nRelevant points:\n- When a road accident occurs, the driver is expected to stop, assist the injured person in obtaining medical care, share identifying information, and report the incident to the police as required by law.\n- Punishment can increase with gravity of harm, and courts consider surrounding facts such as speed, conduct after accident, and evidence quality.\n\nSources used:\n- Motor Vehicles Act: Duties of driver after accident (1988) | Motor Vehicles Act, 1988 (India)\n- Rash and negligent driving consequences (Current) | Indian criminal law principles on rash/negligent driving and causing hurt/death\n\nImportant: This is general legal information, not a substitute for advice from a licensed advocate.",
+        "attachments": [],
+        "createdAt": "2026-03-17T06:16:20.379Z"
+      },
+      {
+        "role": "user",
+        "text": "crazy man",
+        "attachments": [],
+        "createdAt": "2026-03-17T06:16:38.824Z"
+      },
+      {
+        "role": "assistant",
+        "text": "Simple explanation (India context):\ncrazy man\n\nI could not find a strong match in the local India legal corpus for this query.\nTry adding details like: state, offense type, contract/employment/property context, and timeline.\n\nThis is general legal information, not legal advice.",
+        "attachments": [],
+        "createdAt": "2026-03-17T06:16:38.824Z"
+      },
+      {
+        "role": "user",
+        "text": "Please review the uploaded files.",
+        "attachments": [
+          {
+            "name": "legal_problem_ai_test.pdf",
+            "type": "application/pdf",
+            "sizeLabel": "4KB",
+            "kind": "file"
+          }
+        ],
+        "createdAt": "2026-03-17T06:17:05.460Z"
+      },
+      {
+        "role": "assistant",
+        "text": "Simple explanation (India context):\nPlease review the uploaded files.\n\nUser attached 1 file(s)/image(s).\n\nI could not find a strong match in the local India legal corpus for this query.\nTry adding details like: state, offense type, contract/employment/property context, and timeline.\n\nThis is general legal information, not legal advice.",
+        "attachments": [],
+        "createdAt": "2026-03-17T06:17:05.460Z"
+      },
+      {
+        "role": "user",
+        "text": "what to do in this case",
+        "attachments": [
+          {
+            "name": "legal_problem_ai_test.pdf",
+            "type": "application/pdf",
+            "sizeLabel": "4KB",
+            "kind": "file"
+          }
+        ],
+        "createdAt": "2026-03-17T06:17:35.285Z"
+      },
+      {
+        "role": "assistant",
+        "text": "Simple explanation (India context):\nwhat to do in this case\n\nUser attached 1 file(s)/image(s).\n\nI could not find a strong match in the local India legal corpus for this query.\nTry adding details like: state, offense type, contract/employment/property context, and timeline.\n\nThis is general legal information, not legal advice.",
+        "attachments": [],
+        "createdAt": "2026-03-17T06:17:35.285Z"
+      }
+    ],
+    "createdAt": "2026-03-17T06:15:09.169Z",
+    "updatedAt": "2026-03-17T06:17:35.285Z"
+  }
+]

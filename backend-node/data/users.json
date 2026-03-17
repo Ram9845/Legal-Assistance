@@ -1,1 +1,24 @@
-[]
+[
+  {
+    "id": "504dc25b-e8ba-456f-a382-84b7652d895d",
+    "name": "Sairam Anegundi",
+    "email": "sairamanegundi@gmail.com",
+    "passwordHash": "$2a$10$.bRH4K6kd93qtZ6Rd8hINesbbbUAqIcmsCSiOpgkhBlyTaanXv3li",
+    "provider": "local",
+    "googleSub": null,
+    "githubSub": null,
+    "createdAt": "2026-03-09T13:06:48.472Z",
+    "updatedAt": "2026-03-09T13:06:48.472Z"
+  },
+  {
+    "id": "947b5e9d-ed3c-4948-a72b-6885f6d3d953",
+    "name": "Banu",
+    "email": "banu@gmail.com",
+    "passwordHash": "$2a$10$XWxWtjgYs78oERkzd/Hysu4xnSNF6lY5pgrE2sySqhEkqV/u8RImu",
+    "provider": "local",
+    "googleSub": null,
+    "githubSub": null,
+    "createdAt": "2026-03-17T06:14:50.309Z",
+    "updatedAt": "2026-03-17T06:14:50.309Z"
+  }
+]

@@ -14,25 +14,30 @@
     <section class="auth-card">
       <a class="back-link" href="/">Back to home</a>
       <h1>Create Account</h1>
-      <p>Start using your legal assistant in less than a minute.</p>
+      <p>Start using your AI legal assistant in under a minute.</p>
 
       <form id="registerForm" class="auth-form">
         <label for="name">Full Name</label>
-        <input id="name" type="text" required />
+        <input id="name" type="text" placeholder="Jane Smith" required autocomplete="name" />
 
         <label for="email">Email</label>
-        <input id="email" type="email" required />
+        <input id="email" type="email" placeholder="you@example.com" required autocomplete="email" />
 
         <label for="password">Password</label>
-        <input id="password" type="password" minlength="6" required />
+        <input id="password" type="password" placeholder="At least 6 characters" minlength="6" required autocomplete="new-password" />
 
-        <button id="registerSubmit" type="submit">Register</button>
+        <button id="registerSubmit" type="submit">Create Account →</button>
       </form>
+
+      <div class="divider">or continue with</div>
+
       <div class="oauth-wrap">
         <div id="googleAuthWrap" class="google-wrap"></div>
         <a id="githubLoginLink" class="oauth-btn github" href="#">Continue with GitHub</a>
       </div>
+
       <p id="authStatus" class="auth-status"></p>
+
       <p class="auth-foot">
         Already registered? <a href="/login">Login</a>
       </p>

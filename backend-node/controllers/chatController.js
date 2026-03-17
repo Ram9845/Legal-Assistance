@@ -1,5 +1,12 @@
 import ChatSession from "../models/ChatSession.js";
 import { askFastApi } from "../services/ragService.js";
+import { isMongoAvailable } from "../services/persistenceMode.js";
+import {
+  appendChatMessages,
+  createChat,
+  findChatById,
+  listChatsByUser,
+} from "../services/localDataStore.js";
 
 function toAttachmentMeta(items = []) {
   return items.map((att) => ({
@@ -22,6 +29,72 @@ function buildPrompt(question, attachmentCount) {
   return `Explain in simple language for a non-lawyer:\n${question}${attachmentNote}`;
 }
 
+async function upsertChatSession({ userId, chatId, normalizedQuery, attachmentMeta, answer }) {
+  if (isMongoAvailable()) {
+    let session = null;
+
+    if (chatId) {
+      session = await ChatSession.findOne({ _id: chatId, userId });
+    }
+
+    if (!session) {
+      session = new ChatSession({
+        userId,
+        title:
+          normalizedQuery.length > 56
+            ? `${normalizedQuery.slice(0, 56)}...`
+            : normalizedQuery,
+        messages: [],
+      });
+    }
+
+    session.messages.push({
+      role: "user",
+      text: normalizedQuery,
+      attachments: attachmentMeta,
+    });
+
+    session.messages.push({
+      role: "assistant",
+      text: String(answer),
+      attachments: [],
+    });
+
+    await session.save();
+    return String(session._id);
+  }
+
+  let session = null;
+  if (chatId) {
+    session = await findChatById(chatId, userId);
+  }
+
+  if (!session) {
+    session = await createChat({
+      userId,
+      title:
+        normalizedQuery.length > 56
+          ? `${normalizedQuery.slice(0, 56)}...`
+          : normalizedQuery,
+    });
+  }
+
+  const updated = await appendChatMessages(session.id, userId, [
+    {
+      role: "user",
+      text: normalizedQuery,
+      attachments: attachmentMeta,
+    },
+    {
+      role: "assistant",
+      text: String(answer),
+      attachments: [],
+    },
+  ]);
+
+  return updated?.id || session.id;
+}
+
 export async function queryLegalAssistant(req, res) {
   try {
     const { query, attachments = [], chatId } = req.body || {};
@@ -42,37 +115,13 @@ export async function queryLegalAssistant(req, res) {
 
     let savedChatId = null;
     if (req.user?.sub) {
-      let session = null;
-
-      if (chatId) {
-        session = await ChatSession.findOne({ _id: chatId, userId: req.user.sub });
-      }
-
-      if (!session) {
-        session = new ChatSession({
-          userId: req.user.sub,
-          title:
-            normalizedQuery.length > 56
-              ? `${normalizedQuery.slice(0, 56)}...`
-              : normalizedQuery,
-          messages: [],
-        });
-      }
-
-      session.messages.push({
-        role: "user",
-        text: normalizedQuery,
-        attachments: attachmentMeta,
+      savedChatId = await upsertChatSession({
+        userId: req.user.sub,
+        chatId,
+        normalizedQuery,
+        attachmentMeta,
+        answer,
       });
-
-      session.messages.push({
-        role: "assistant",
-        text: String(answer),
-        attachments: [],
-      });
-
-      await session.save();
-      savedChatId = String(session._id);
     }
 
     return res.status(200).json({
@@ -109,16 +158,29 @@ export async function uploadFiles(req, res) {
 
 export async function getMyChatHistory(req, res) {
   try {
-    const sessions = await ChatSession.find({ userId: req.user.sub })
-      .sort({ updatedAt: -1 })
-      .select("title updatedAt createdAt messages");
+    if (isMongoAvailable()) {
+      const sessions = await ChatSession.find({ userId: req.user.sub })
+        .sort({ updatedAt: -1 })
+        .select("title updatedAt createdAt messages");
 
+      const data = sessions.map((session) => ({
+        id: String(session._id),
+        title: session.title,
+        createdAt: session.createdAt,
+        updatedAt: session.updatedAt,
+        messages: session.messages,
+      }));
+
+      return res.status(200).json({ chats: data });
+    }
+
+    const sessions = await listChatsByUser(req.user.sub);
     const data = sessions.map((session) => ({
-      id: String(session._id),
+      id: session.id,
       title: session.title,
       createdAt: session.createdAt,
       updatedAt: session.updatedAt,
-      messages: session.messages,
+      messages: session.messages || [],
     }));
 
     return res.status(200).json({ chats: data });

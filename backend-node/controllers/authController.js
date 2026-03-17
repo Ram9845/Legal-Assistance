@@ -2,16 +2,64 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { OAuth2Client } from "google-auth-library";
 import User from "../models/User.js";
+import { isMongoAvailable } from "../services/persistenceMode.js";
+import {
+  createUser as createLocalUser,
+  findUserByEmail as findLocalUserByEmail,
+  findUserById as findLocalUserById,
+  saveUser as saveLocalUser,
+} from "../services/localDataStore.js";
 
 const JWT_SECRET = process.env.JWT_SECRET || "dev-secret-change-this";
 const TOKEN_TTL = process.env.JWT_EXPIRES_IN || "7d";
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID || "");
 const FRONTEND_BASE_URL = process.env.FRONTEND_BASE_URL || "http://localhost:3000";
 
+function userId(user) {
+  return String(user?._id || user?.id || "");
+}
+
+async function findUserByEmail(email) {
+  if (isMongoAvailable()) {
+    return User.findOne({ email });
+  }
+  return findLocalUserByEmail(email);
+}
+
+async function findLocalProviderUser(email) {
+  if (isMongoAvailable()) {
+    return User.findOne({ email, provider: "local" });
+  }
+  const user = await findLocalUserByEmail(email);
+  return user?.provider === "local" ? user : null;
+}
+
+async function createUser(data) {
+  if (isMongoAvailable()) {
+    return User.create(data);
+  }
+  return createLocalUser(data);
+}
+
+async function saveUser(user) {
+  if (isMongoAvailable()) {
+    await user.save();
+    return user;
+  }
+  return saveLocalUser(user);
+}
+
+async function findUserById(id) {
+  if (isMongoAvailable()) {
+    return User.findById(id);
+  }
+  return findLocalUserById(id);
+}
+
 function signUserToken(user) {
   return jwt.sign(
     {
-      sub: String(user._id),
+      sub: userId(user),
       email: user.email,
       name: user.name,
       provider: user.provider,
@@ -23,7 +71,7 @@ function signUserToken(user) {
 
 function safeUser(user) {
   return {
-    id: String(user._id),
+    id: userId(user),
     name: user.name,
     email: user.email,
     provider: user.provider,
@@ -68,13 +116,13 @@ export async function registerUser(req, res) {
   }
 
   const normalizedEmail = String(email).trim().toLowerCase();
-  const existing = await User.findOne({ email: normalizedEmail });
+  const existing = await findUserByEmail(normalizedEmail);
 
   if (existing) {
     return res.status(409).json({ message: "Email already registered" });
   }
 
-  const user = await User.create({
+  const user = await createUser({
     name: String(name).trim(),
     email: normalizedEmail,
     passwordHash: await bcrypt.hash(String(password), 10),
@@ -92,7 +140,7 @@ export async function loginUser(req, res) {
   }
 
   const normalizedEmail = String(email).trim().toLowerCase();
-  const user = await User.findOne({ email: normalizedEmail, provider: "local" });
+  const user = await findLocalProviderUser(normalizedEmail);
 
   if (!user || !user.passwordHash) {
     return res.status(401).json({ message: "Invalid email or password" });
@@ -129,10 +177,10 @@ export async function googleLogin(req, res) {
     }
 
     const normalizedEmail = payload.email.toLowerCase();
-    let user = await User.findOne({ email: normalizedEmail });
+    let user = await findUserByEmail(normalizedEmail);
 
     if (!user) {
-      user = await User.create({
+      user = await createUser({
         name: payload.name || normalizedEmail,
         email: normalizedEmail,
         provider: "google",
@@ -144,12 +192,12 @@ export async function googleLogin(req, res) {
       if (!user.name && payload.name) {
         user.name = payload.name;
       }
-      await user.save();
+      user = await saveUser(user);
     }
 
     const token = signUserToken(user);
     return res.status(200).json({ token, user: safeUser(user) });
-  } catch (err) {
+  } catch (_err) {
     return res.status(401).json({ message: "Google token verification failed" });
   }
 }
@@ -258,10 +306,10 @@ export async function githubCallback(req, res) {
     }
 
     const normalizedEmail = String(email).toLowerCase();
-    let user = await User.findOne({ email: normalizedEmail });
+    let user = await findUserByEmail(normalizedEmail);
 
     if (!user) {
-      user = await User.create({
+      user = await createUser({
         name: ghUser?.name || ghUser?.login || normalizedEmail,
         email: normalizedEmail,
         provider: "github",
@@ -273,7 +321,7 @@ export async function githubCallback(req, res) {
       if (!user.name) {
         user.name = ghUser?.name || ghUser?.login || normalizedEmail;
       }
-      await user.save();
+      user = await saveUser(user);
     }
 
     const token = signUserToken(user);
@@ -289,14 +337,14 @@ export async function getCurrentUser(req, res) {
   }
 
   try {
-    const user = await User.findById(req.user.sub);
+    const user = await findUserById(req.user.sub);
 
     if (!user) {
       return res.status(401).json({ message: "User not found" });
     }
 
     return res.status(200).json({ user: safeUser(user) });
-  } catch (err) {
+  } catch (_err) {
     return res.status(500).json({ message: "Failed to load user" });
   }
 }

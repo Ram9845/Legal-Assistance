@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LegalAssist AI</title>
+  <title>LegalAssist AI – Plain-Language Legal Help</title>
+  <meta name="description" content="Ask legal questions in plain English. Get instant, easy-to-read explanations powered by AI." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;800&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet" />
@@ -15,35 +16,49 @@
       <a class="brand" href="/">LegalAssist AI</a>
       <nav class="nav-actions">
         <a class="link-btn" href="/login">Login</a>
-        <a class="solid-btn" href="/register">Register</a>
+        <a class="solid-btn" href="/register">Get Started →</a>
       </nav>
     </header>
 
     <section class="hero">
-      <p class="eyebrow">LEGAL HELP MADE SIMPLE</p>
-      <h1>Understand Legal Issues Faster and More Clearly.</h1>
+      <p class="eyebrow">✦ Legal Help Made Simple</p>
+      <h1>Understand Legal Issues<br>Faster and More Clearly.</h1>
       <p class="subtitle">
-        Ask legal questions in plain English, upload your documents, and get easy-to-read explanations in seconds.
+        Ask legal questions in plain English, upload your documents, and get easy-to-read explanations — powered by AI, in seconds.
       </p>
       <div class="hero-actions">
-        <a class="solid-btn" href="/register">Create Account</a>
+        <a class="solid-btn" href="/register">Create Free Account →</a>
         <a class="link-btn" href="/login">I already have an account</a>
       </div>
     </section>
 
     <section class="feature-grid">
       <article class="feature-card">
+        <span class="feature-icon">📝</span>
         <h2>Plain-Language Answers</h2>
-        <p>Complex legal topics translated into simple, practical guidance.</p>
+        <p>Complex legal topics translated into simple, practical guidance you can actually understand.</p>
       </article>
       <article class="feature-card">
+        <span class="feature-icon">💬</span>
         <h2>Chat + Documents</h2>
-        <p>Upload files and ask follow-up questions in one chat flow.</p>
+        <p>Upload contracts, leases, or any document and ask follow-up questions in one seamless chat flow.</p>
       </article>
       <article class="feature-card">
+        <span class="feature-icon">🔒</span>
         <h2>Saved Chat History</h2>
-        <p>Sign in to keep and revisit previous legal conversations.</p>
+        <p>Sign in to keep and revisit previous legal conversations. Your history, always accessible.</p>
       </article>
+    </section>
+
+    <section class="quick-ask">
+      <h2>Ask a Legal Question Now</h2>
+      <p>No account needed. Try it instantly.</p>
+      <form id="quickAskForm" class="quick-ask-form">
+        <textarea id="quickQuestionInput" rows="3" placeholder="Example: What happens if a tenant does not pay rent for 2 months?"></textarea>
+        <button type="submit" class="solid-btn">Ask Question →</button>
+      </form>
+      <div id="quickAskStatus" class="quick-ask-status"></div>
+      <pre id="quickAskAnswer" class="quick-ask-answer hidden"></pre>
     </section>
   </main>
 

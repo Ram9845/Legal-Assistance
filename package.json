@@ -1,4 +1,9 @@
 {
+  "scripts": {
+    "start:frontend": "npm --prefix frontend start",
+    "start:backend": "npm --prefix backend-node start",
+    "start:ml": "python -m uvicorn main:app --host 0.0.0.0 --port 8000 --app-dir ml-fastapi"
+  },
   "dependencies": {
     "bcryptjs": "^3.0.3",
     "cors": "^2.8.6",
