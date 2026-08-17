@@ -231,5 +231,78 @@
     ],
     "createdAt": "2026-03-17T06:15:09.169Z",
     "updatedAt": "2026-03-17T06:17:35.285Z"
+  },
+  {
+    "id": "9e001fe9-4c26-4d59-a812-20bf3262532a",
+    "userId": "f2131ef2-5b35-40d2-b22b-328973d797fd",
+    "title": "give suggestiokn",
+    "messages": [
+      {
+        "role": "user",
+        "text": "give suggestiokn",
+        "attachments": [
+          {
+            "name": "legal_problem_ai_test.pdf",
+            "type": "application/pdf",
+            "sizeLabel": "4KB",
+            "kind": "file"
+          }
+        ],
+        "createdAt": "2026-03-21T08:04:00.780Z"
+      },
+      {
+        "role": "assistant",
+        "text": "Simple explanation (India context):\ngive suggestiokn\n\nUser attached 1 file(s)/image(s).\n\nI could not find a strong match in the local India legal corpus for this query.\nTry adding details like: state, offense type, contract/employment/property context, and timeline.\n\nThis is general legal information, not legal advice.",
+        "attachments": [],
+        "createdAt": "2026-03-21T08:04:00.781Z"
+      },
+      {
+        "role": "user",
+        "text": "what is the consequence of hit and run case",
+        "attachments": [],
+        "createdAt": "2026-03-21T08:04:21.312Z"
+      },
+      {
+        "role": "assistant",
+        "text": "India legal explanation (general information):\nQuestion: what is the consequence of hit and run case\n\nRelevant points:\n- When a road accident occurs, the driver is expected to stop, assist the injured person in obtaining medical care, share identifying information, and report the incident to the police as required by law.\n\nSources used:\n- Motor Vehicles Act: Duties of driver after accident (1988) | Motor Vehicles Act, 1988 (India)\n\nImportant: This is general legal information, not a substitute for advice from a licensed advocate.",
+        "attachments": [],
+        "createdAt": "2026-03-21T08:04:21.312Z"
+      }
+    ],
+    "createdAt": "2026-03-21T08:04:00.755Z",
+    "updatedAt": "2026-03-21T08:04:21.312Z"
+  },
+  {
+    "id": "ce566d72-7862-4a62-91b9-b38ce7b6cb6f",
+    "userId": "504dc25b-e8ba-456f-a382-84b7652d895d",
+    "title": "heyy what happens if i dont pay rent",
+    "messages": [
+      {
+        "role": "user",
+        "text": "heyy what happens if i dont pay rent",
+        "attachments": [],
+        "createdAt": "2026-03-23T18:46:52.891Z"
+      },
+      {
+        "role": "assistant",
+        "text": "India legal explanation (general information):\nQuestion: heyy what happens if i dont pay rent\n\nRelevant points:\n- Notice requirements, grounds of eviction, and procedure vary by state rent law and contract terms.\n\nSources used:\n- Landlord-tenant eviction due process (Current) | State rent control and tenancy law principles in India\n\nImportant: This is general legal information, not a substitute for advice from a licensed advocate.",
+        "attachments": [],
+        "createdAt": "2026-03-23T18:46:52.891Z"
+      },
+      {
+        "role": "user",
+        "text": "whats punishment for phone hacking",
+        "attachments": [],
+        "createdAt": "2026-03-23T18:49:36.808Z"
+      },
+      {
+        "role": "assistant",
+        "text": "India legal explanation (general information):\nQuestion: whats punishment for phone hacking\n\nRelevant points:\n- Punishment can increase with gravity of harm, and courts consider surrounding facts such as speed, conduct after accident, and evidence quality.\n\nSources used:\n- Rash and negligent driving consequences (Current) | Indian criminal law principles on rash/negligent driving and causing hurt/death\n\nImportant: This is general legal information, not a substitute for advice from a licensed advocate.",
+        "attachments": [],
+        "createdAt": "2026-03-23T18:49:36.808Z"
+      }
+    ],
+    "createdAt": "2026-03-23T18:46:52.877Z",
+    "updatedAt": "2026-03-23T18:49:36.808Z"
   }
 ]

@@ -168,8 +168,35 @@ function initHomePage() {
 
       quickAskStatus.textContent = "Getting answer...";
       quickAskAnswer.classList.add("hidden");
+      
+      const mlPanel = document.getElementById("mlInsightsPanel");
+      const mlText = document.getElementById("mlPredictionText");
+      const mlConfidence = document.getElementById("mlConfidenceBadge");
+      if (mlPanel) {
+        mlPanel.classList.add("hidden");
+        mlText.textContent = "Analyzing...";
+        mlConfidence.textContent = "--%";
+      }
 
       try {
+        // Run ML Prediction in parallel for quick ask if mlPanel is present
+        if (mlPanel) {
+          fetch(`${window.APP_CONFIG.backendApiBase}/api/ml/predict`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ text: question }),
+          })
+            .then(res => res.json())
+            .then(data => {
+              if (data && data.prediction) {
+                mlText.textContent = data.prediction;
+                mlConfidence.textContent = `${(data.confidence * 100).toFixed(1)}% Confidence`;
+                mlPanel.classList.remove("hidden");
+              }
+            })
+            .catch(err => console.error("ML insight error:", err));
+        }
+
         const res = await fetch(`${window.APP_CONFIG.backendApiBase}/api/chat/query`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },

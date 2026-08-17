@@ -7,7 +7,7 @@
   <meta name="description" content="Ask legal questions in plain English. Get instant, easy-to-read explanations powered by AI." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;800&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/css/home.css" />
 </head>
 <body>
@@ -58,6 +58,15 @@
         <button type="submit" class="solid-btn">Ask Question →</button>
       </form>
       <div id="quickAskStatus" class="quick-ask-status"></div>
+      
+      <div id="mlInsightsPanel" class="ml-insights hidden" style="margin-top: 20px; padding: 15px; border-radius: 8px; background-color: var(--surface-1); border: 1px solid var(--border);">
+        <h3 style="margin-top: 0; display: flex; align-items: center; gap: 8px; font-size: 1rem;"><span style="color: var(--brand);">✨</span> ML Case Type Prediction</h3>
+        <p style="margin: 5px 0 0 0; font-size: 0.9rem;">
+          <strong id="mlPredictionText">Analyzing...</strong>
+          <span id="mlConfidenceBadge" style="margin-left: 10px; padding: 2px 8px; border-radius: 12px; font-size: 0.8rem; background-color: rgba(var(--brand-rgb), 0.1); color: var(--brand);">--%</span>
+        </p>
+      </div>
+
       <pre id="quickAskAnswer" class="quick-ask-answer hidden"></pre>
     </section>
   </main>

@@ -163,6 +163,8 @@ function pushMessage({ role, text, attachments = [] }) {
     role,
     text,
     attachments,
+    ml_prediction: arguments[0].ml_prediction,
+    ml_confidence: arguments[0].ml_confidence,
     createdAt: Date.now(),
   });
 
@@ -304,6 +306,15 @@ function renderMessage(message) {
     bubble.appendChild(attachmentList);
   }
 
+  // ML Prediction Badge
+  if (message.ml_prediction && message.ml_confidence) {
+    const mlBadge = document.createElement("div");
+    mlBadge.className = "ml-badge";
+    mlBadge.style.cssText = "margin-top: 10px; padding: 6px 10px; background-color: rgba(var(--brand-rgb), 0.1); border: 1px solid var(--brand); border-radius: 6px; font-size: 0.85rem; color: var(--text-main); display: inline-flex; align-items: center; gap: 6px;";
+    mlBadge.innerHTML = `<span style="color: var(--brand);">✨</span> <strong>Predicted Case Type:</strong> ${escapeHtml(message.ml_prediction)} <span style="margin-left:auto; opacity: 0.8; font-size: 0.75rem;">${(parseFloat(message.ml_confidence) * 100).toFixed(1)}% Confidence</span>`;
+    bubble.appendChild(mlBadge);
+  }
+
   // Footer: timestamp + copy button for assistant
   const footer = document.createElement("div");
   footer.className = "msg-footer";
@@ -434,12 +445,16 @@ async function handleUploadChange(event) {
       previewDataUrl: null,
     };
 
-    if (upload.kind === "image" && file.size <= 2 * 1024 * 1024) {
-      try {
-        upload.previewDataUrl = await fileToDataUrl(file);
-      } catch (err) {
-        console.error("Image preview failed", err);
+    try {
+      if (file.size <= 5 * 1024 * 1024) {
+        const dataUrl = await fileToDataUrl(file);
+        upload.dataUrl = dataUrl;
+        if (upload.kind === "image") {
+          upload.previewDataUrl = dataUrl;
+        }
       }
+    } catch (err) {
+      console.error("File read failed", err);
     }
 
     state.pendingUploads.push(upload);
@@ -466,6 +481,7 @@ async function getAssistantAnswer(question, attachments) {
       type: att.type,
       sizeLabel: att.sizeLabel,
       kind: att.kind,
+      dataUrl: att.dataUrl,
     }));
 
     // FIX: Do NOT double-wrap. Send the question directly.
@@ -492,7 +508,11 @@ async function getAssistantAnswer(question, attachments) {
     }
 
     if (data && data.answer) {
-      return String(data.answer);
+      return {
+        answer: String(data.answer),
+        ml_prediction: data.ml_prediction,
+        ml_confidence: data.ml_confidence
+      };
     }
 
     throw new Error("Empty response from server");
@@ -541,10 +561,20 @@ async function sendQuestion() {
     if (!chat) return;
     const last = chat.messages[chat.messages.length - 1];
     if (last && last.role === "assistant" && last.text === "Thinking...") {
-      last.text = answer;
+      last.text = typeof answer === 'string' ? answer : (answer.answer || "");
+      if (answer.ml_prediction) {
+        last.ml_prediction = answer.ml_prediction;
+        last.ml_confidence = answer.ml_confidence;
+      }
       last.createdAt = Date.now();
     } else {
-      pushMessage({ role: "assistant", text: answer, attachments: [] });
+      pushMessage({ 
+        role: "assistant", 
+        text: typeof answer === 'string' ? answer : (answer.answer || ""), 
+        ml_prediction: answer.ml_prediction,
+        ml_confidence: answer.ml_confidence,
+        attachments: [] 
+      });
     }
 
     chat.updatedAt = Date.now();
@@ -600,6 +630,8 @@ async function syncChatsFromServer() {
             id: uid(),
             role: msg.role === "assistant" ? "assistant" : "user",
             text: msg.text || "",
+            ml_prediction: msg.ml_prediction,
+            ml_confidence: msg.ml_confidence,
             attachments: Array.isArray(msg.attachments) ? msg.attachments : [],
             createdAt: toTimestamp(msg.createdAt),
           }))

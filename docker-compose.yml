@@ -1,12 +1,11 @@
-version: "3.9"
-
 services:
+
   frontend:
-    image: node:20-alpine
-    working_dir: /app
-    volumes:
-      - ./frontend:/app
-    command: sh -c "npm install && npm start"
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: legal-frontend
+    restart: unless-stopped
     ports:
       - "3000:3000"
     environment:
@@ -16,15 +15,19 @@ services:
     env_file:
       - .env
     depends_on:
-      - backend-node
-      - ml-fastapi
+      backend-node:
+        condition: service_started
+      ml-fastapi:
+        condition: service_started
+    networks:
+      - legal-net
 
   backend-node:
-    image: node:20-alpine
-    working_dir: /app
-    volumes:
-      - ./backend-node:/app
-    command: sh -c "npm install && npm start"
+    build:
+      context: ./backend-node
+      dockerfile: Dockerfile
+    container_name: legal-backend
+    restart: unless-stopped
     ports:
       - "5000:5000"
     environment:
@@ -35,27 +38,57 @@ services:
     env_file:
       - .env
     depends_on:
-      - mongo
-      - ml-fastapi
+      mongo:
+        condition: service_healthy
+      ml-fastapi:
+        condition: service_started
+    networks:
+      - legal-net
 
   ml-fastapi:
-    image: python:3.11-slim
-    working_dir: /app
-    volumes:
-      - ./ml-fastapi:/app
-    command: sh -c "pip install -r requirements.txt && uvicorn main:app --host 0.0.0.0 --port 8000"
+    build:
+      context: ./ml-fastapi
+      dockerfile: Dockerfile
+    container_name: legal-ml
+    restart: unless-stopped
     ports:
       - "8000:8000"
     env_file:
       - .env
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    volumes:
+      - ./ml-fastapi:/app
+      - ./legal-dataset:/app/legal-dataset
+      - chroma_data:/app/chroma_db
+    networks:
+      - legal-net
 
   mongo:
     image: mongo:7
+    container_name: legal-mongo
     restart: unless-stopped
     ports:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - legal-net
+
+networks:
+  legal-net:
+    driver: bridge
 
 volumes:
   mongo_data:
+  chroma_data:

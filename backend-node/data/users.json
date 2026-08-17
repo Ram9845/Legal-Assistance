@@ -20,5 +20,16 @@
     "githubSub": null,
     "createdAt": "2026-03-17T06:14:50.309Z",
     "updatedAt": "2026-03-17T06:14:50.309Z"
+  },
+  {
+    "id": "f2131ef2-5b35-40d2-b22b-328973d797fd",
+    "name": "ABC",
+    "email": "abc@gmail.com",
+    "passwordHash": "$2a$10$cqg9W9PywKy5vmAbs/mLZu0R5.XY3ZfD4oi.FLcPB2eDyS8zq35Aq",
+    "provider": "local",
+    "googleSub": null,
+    "githubSub": null,
+    "createdAt": "2026-03-21T08:03:11.939Z",
+    "updatedAt": "2026-03-21T08:03:11.939Z"
   }
 ]

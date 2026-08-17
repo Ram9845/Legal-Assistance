@@ -6,6 +6,7 @@ import { fileURLToPath } from "url";
 import healthRoutes from "./routes/healthRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import chatRoutes from "./routes/chatRoutes.js";
+import mlRoutes from "./routes/mlRoutes.js";
 import { connectDB } from "./config/db.js";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -28,6 +29,7 @@ app.use(express.json({ limit: "10mb" }));
 app.use("/api", healthRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/chat", chatRoutes);
+app.use("/api/ml", mlRoutes);
 
 app.get("/", (req, res) => {
   res.json({ message: "Legal RAG Node backend is running" });
