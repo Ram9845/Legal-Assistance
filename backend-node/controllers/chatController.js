@@ -8,14 +8,16 @@ import {
   listChatsByUser,
 } from "../services/localDataStore.js";
 import pdfParse from "pdf-parse";
-import OpenAI from "openai";
+import { ChatGroq } from "@langchain/groq";
+import { SystemMessage, HumanMessage, AIMessage } from "@langchain/core/messages";
 import dotenv from "dotenv";
 dotenv.config();
 
-// ── Nvidia Nemotron LLM Client ──
-const openai = new OpenAI({
-  apiKey: process.env.NVIDIA_API_KEY,
-  baseURL: "https://integrate.api.nvidia.com/v1",
+// ── LangChain Groq LLM Client ──
+const llm = new ChatGroq({
+  apiKey: process.env.GROQ_API_KEY,
+  model: "qwen/qwen3.8-27b",
+  temperature: 0.2,
 });
 
 // ── Helpers ──
@@ -168,36 +170,50 @@ Rules:
     // Build conversation history for cross-questions
     const messages = [{ role: "system", content: systemPrompt }];
 
-    // Add previous conversation (last 6 messages max to stay within token limits)
-    const recentHistory = previousMessages.slice(-6);
+    // Add previous conversation (last 2 messages to stay within Groq free-tier token limits)
+    const recentHistory = previousMessages.slice(-2);
     for (const msg of recentHistory) {
       messages.push({
         role: msg.role === "assistant" ? "assistant" : "user",
-        content: msg.text || "",
+        content: (msg.text || "").substring(0, 500),
       });
     }
 
-    // Build current user message with all context
+    // Build current user message with trimmed context (Groq free tier = 8000 TPM)
     let currentMessage = `USER QUESTION:\n${userQuestion}`;
 
     if (extractedText) {
-      currentMessage += `\n\nUSER UPLOADED DOCUMENT:\n${extractedText.substring(0, 12000)}`;
+      currentMessage += `\n\nUSER UPLOADED DOCUMENT (summary):\n${extractedText.substring(0, 2000)}`;
     }
 
     if (ragContext) {
-      currentMessage += `\n\nRELEVANT SUPREME COURT CONTEXT (from RAG search):\n${ragContext}`;
+      currentMessage += `\n\nRELEVANT SUPREME COURT CONTEXT (from RAG search):\n${ragContext.substring(0, 3000)}`;
     }
 
-    currentMessage += `\n\nPlease answer the question based on the above context. Cite relevant cases and laws.`;
+    currentMessage += `\n\nPlease answer the question based on the above context in simple language. Cite relevant cases and laws.`;
 
     messages.push({ role: "user", content: currentMessage });
 
-    // ── Step 5: Return RAG Context Directly (LLM Disabled) ──
+    // ── Step 5: Call Groq LLM via LangChain ──
     let finalAnswer = "";
-    if (ragContext) {
-      finalAnswer = `**Search Method: ChromaDB Vector Search (Supreme Court PDFs)**\n\nHere are the top 5 related judgments matching your query:\n\n${ragContext}`;
-    } else {
-      finalAnswer = "No related judgments were found in the Supreme Court dataset.";
+    try {
+      // Convert standard message objects to LangChain message classes
+      const langMessages = messages.map(msg => {
+        if (msg.role === "system") return new SystemMessage(msg.content);
+        if (msg.role === "assistant") return new AIMessage(msg.content);
+        return new HumanMessage(msg.content);
+      });
+
+      const response = await llm.invoke(langMessages);
+      finalAnswer = String(response.content);
+    } catch (llmErr) {
+      console.error("LLM Error:", llmErr.message);
+      // Fallback: return the RAG context directly if LLM fails
+      if (ragContext) {
+        finalAnswer = `⚠️ LLM unavailable. Showing matched Supreme Court context:\n\n${ragContext}`;
+      } else {
+        finalAnswer = "I encountered an error generating a response. Please check your Groq API key and try again.";
+      }
     }
 
     // ── Step 6: Save to MongoDB ──
